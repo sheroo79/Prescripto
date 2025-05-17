@@ -1,0 +1,319 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+// Css Color
+$primary-color : #5F6FFF;
+$black-color: #262626;
+$gray-color : #59595E;
+body{
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings: "wdth" 100,"YTLC" 500;
+}
+.Toastify__toast {
+    min-height: 50px;
+    width: 250px;      /* default ~64px hoti hai */
+    height: auto;          /* ya fixed height like 50px bhi de sakte ho */
+    padding: 10px 16px;    /* andar ka space kam zyada karne ke liye */
+    font-size: 14px;       /* optional: text size control */
+    border-radius: 8px;    /* rounded corners if you want */
+    display: flex;
+    align-items: center;
+    align-items: center;   /* vertically center text & icon */
+  }
+.Toastify__close-button {
+    line-height: 36px;
+  }
+  .Toastify__progress-bar {
+    background: white !important;
+    opacity: 1;
+  }
+.home-container{
+    padding: 20px 40px;
+    @media (max-width: 1024px){  
+        padding: 20px;
+    }
+}
+.parent{
+    background-color: $primary-color;
+    border-radius: 7px;
+    padding: 5rem 5rem 0rem 5rem;
+    min-height: 110vh;
+    position: relative;
+    width: 100%;
+    h1{
+        color: #fff;
+        font-weight: 700;
+        font-size: 3rem;
+        width: 100%;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            width: 50%;
+            font-size: 4rem;
+            font-weight: 800;
+        }
+        @media (max-width: 992px){  
+            width: 100%;
+            font-size: 2.5rem;
+        }
+    }
+}
+.top-section{
+    align-self: flex-end;
+    .Drs3{
+        max-width:380px;   
+        width: 100%;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            width: 35vw;
+        }
+    }
+}
+.img-para-wrapper{
+    margin-top: 30px;
+    .book{
+        background-color: #fff;
+        padding: 10px 30px;
+        font-size: 13px;
+        font-weight: 600;
+        color: $gray-color;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+        transition: all 0.3s ease-in-out;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            font-size: 18px;
+        }
+    }
+    .book:hover{
+        transform: scale(1.05);
+    }
+}
+.img-para{
+    display: flex;
+    gap: 14px;
+    // background-color: #000;
+    
+    img{
+        height: 50px;
+        width: 120px;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            height: 70px;
+            width: 160px;
+            margin-bottom: 20px;
+        }
+    }
+    p{
+        color: #fff;
+        font-size: 13.5px;
+        width: 100%;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            font-size: 17px;
+        }
+    }
+}
+// Specialtiy Styling
+.speciality-wrapper{
+    margin-top: 50px;
+    h2{
+        text-align: center;
+        color: $black-color;
+        font-weight: 600;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            font-size: 40px;
+            font-weight: 700;
+        }
+    }
+    p{
+        text-align: center;
+        width: 35%;
+        font-size: 14px;
+        color: $black-color;
+        margin: 20px auto;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            font-size: 18px;
+            width: 40%;
+        }
+    }
+    .Dr-fields{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 13px;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            gap: 20px;
+        }
+        @mixin comon-style{
+            display: flex;
+            flex-direction: column; 
+            gap: 5px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            img{
+                height: 90px;
+                @media (min-width: 1280px) and (max-width: 1535px){
+                    height: 120px;
+                }
+            }
+            small{
+                font-size: 12px;
+                text-align: center;
+                @media (min-width: 1280px) and (max-width: 1535px){
+                    font-size: 17px;
+                }
+            }
+        }
+        .general, 
+        .dermotoligst, 
+        .gastroenterologist, 
+        .gynecologist, 
+        .neurologist, 
+        .pediatricians {
+            @include comon-style();
+        }
+        // Hover Effect
+        .general:hover,
+        .dermotoligst:hover,
+        .gastroenterologist:hover,
+        .gynecologist:hover,
+        .neurologist:hover,
+        .pediatricians:hover {
+        margin-top: -20px;
+    }
+}}
+    
+// Top Dr Wrapper
+.top-Dr-wrapper{
+    margin-top: 50px;
+    h2{
+        text-align: center;
+        color: $black-color;
+        font-weight: 600;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            font-size: 40px;
+            font-weight: 700;
+        }
+    }
+    .top-dr-para{
+        text-align: center;
+        width: 35%;
+        font-size: 14px;
+        color: $black-color;
+        margin: 20px auto;
+        @media (min-width: 1095px) and (max-width: 1535px){
+            font-size: 18px;
+        }
+    }
+    .card:hover{
+        margin-top: -10px;
+    }
+    .col{
+        display: flex;
+        justify-content: center;
+    }
+    .card{
+        width: 35vw;
+        height: 34vw;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        transition: all 0.4s ease-in-out;
+        cursor: pointer;
+        @media (min-width: 1095px )and (max-width: 1400px){
+            width: 20rem;
+        }
+        .card-img-wrapp{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+            height: 100%;
+            overflow: hidden;
+        }
+        .card-img{
+            background-color: #EAEFFF;
+            height: 100%;
+            object-fit: cover;
+        }   
+        .available{
+            color: #22C55E;
+            font-size: 14px;
+            font-weight: 600;
+            .available-btn{
+                background-color: #22C55E;
+                border: none;
+                border-radius: 50%;
+                padding: 4px;
+                transform: translateY(-5px);
+            }
+        }
+        .card-title{
+            color: #000;
+            font-weight: 650;
+            font-size: 18px;
+            @media (min-width: 1095px) and (max-width: 1535px){
+                font-size: 20px;
+            }
+        } 
+        .card-speciality{
+            font-size: 16px;
+            margin-top: -5px;
+            @media (min-width: 1095px) and (max-width: 1535px){
+                font-size: 17px;
+            }
+        }
+    }
+}
+.more{
+    padding: 10px 45px;
+    background-color: #EAEFFF;
+    border-radius: 25px;
+    border: none;
+    color: #4B5563;
+    // height: 30px;
+    // width: 80px;
+}
+// Trusted Dr Second Last part
+.trusted-wrapper{
+    display: flex;
+    background-color: $primary-color;
+    border-radius: 7px;
+    padding: 5rem 5rem 0 5rem;
+    margin: 70px 40px 40px 40px;
+
+    h1{
+        color: #fff;
+        font-weight: 800;
+        font-size: 3rem;
+        width: 100%;
+        @media (min-width: 1280px) and (max-width: 1535px){
+            width: 100%;
+            font-size: 3.5rem;
+        }
+    }
+    img{
+        height: 25rem;
+        @media (min-width: 1280px){
+            height: 27rem;
+            align-self: flex-end;
+        }
+    }
+    .create-acc{
+        padding: 12px 35px;
+        border-radius: 25px;
+        border: none;
+        background-color: #fff;
+        color: $black-color;
+        font-size: 18px;
+        font-weight: 600;
+        transition: all 0.4s ease-in-out;
+        @media (min-width: 1280px){
+            padding: 17px 40px;
+            border-radius: 35px;
+            font-weight: 600;
+        }
+    }
+    .create-acc:hover{
+        transform: scale(1.05);
+    }
+}

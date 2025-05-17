@@ -1,0 +1,549 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-variation-settings: "wdth" 100, "YTLC" 500;
+}
+#Navbar {
+  border-bottom: 1px solid #6666661c;
+  padding: 1vw 3vw;
+  .brand-img {
+    img {
+      height: 3.3vw;
+      cursor: pointer;
+    }
+  }
+  .nav-Btn {
+    padding: 0.5vw 3vw;
+  }
+}
+// DashBoard
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.side-navbar {
+  min-width: 27vw;
+  height: 100vh;
+  padding: 1vw 0;
+  border-right: 1px solid #66666633;
+  ul {
+    padding-left: 0;
+    li {
+      font-size: 17px;
+      list-style: none;
+      color: #666;
+      padding: 1vw 2vw;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      i {
+        font-size: 2.2vw;
+      }
+    }
+    .blue {
+      background-color: #f2f3ff;
+      border-right: 4px solid #5f6fff;
+    }
+  }
+}
+.dashboard-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  background-color: #f8f9fd;
+}
+.right {
+  width: 100%;
+  padding: 2vw;
+  .three-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+    .dr-wrapper,.appointment-wrapper{
+      width: 20vw;
+      min-height: 9vw;
+      background-color: #ffffff;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    .male{
+      color: #5f6fff;
+      font-size: 1vw;
+      align-items: center;
+      justify-content: center;
+      svg{
+        font-size: 2vw;
+      }
+    }
+    .appointment-wrapper{
+      .male{
+        font-size: 1vw;
+        align-items: center;
+        gap: 0.2vw;
+      }
+    }
+    .dr,
+    .app,
+    .pat,
+    .canAppointments {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1vw;
+      .dr-icon {
+        color: #5f6fff;
+        background-color: #f6f8ff;
+        font-size: 3vw;
+        padding: 1vw;
+        border-radius: 5px;
+      }
+      .book-icon {
+        color: #5f6fff;
+        background-color: #f6f8ff;
+        font-size: 3vw;
+        padding: 0.4vw 1vw;
+        border-radius: 5px;
+      }
+      strong {
+        font-size: 20px;
+        font-weight: 700;
+        color: #4b5563;
+      }
+      span {
+        color: #9ca3c0;
+        font-weight: 600;
+      }
+    }
+  }
+  .patien-icon{
+    height: 100%;
+    width: 100%;
+    color: #ffffffa2;
+    background-color: #D6D7D9;
+  }
+  .latest-data{
+    display: flex;
+    gap: 2vw;
+    flex-wrap: wrap;
+  }
+  
+  .latest-booking {
+    overflow-y: hidden;
+    width: 45%;
+    height: 60vh;
+    border: 1px solid #6666;
+    border-radius: 3px;
+    margin-top: 2vw;
+    background-color: #ffffff;
+    h6 {
+      border-bottom: 1px solid #6666;
+      font-weight: 700;
+      padding: 1vw;
+      color: black;
+      .latest-icon {
+        color: #5f6fff;
+        margin-right: 2px;
+      }
+    }
+    .booking{
+      height: 100%;
+      padding-bottom: 5vw;
+      overflow-y: auto;
+      // background-color: rebeccapurple;
+    }
+    .booking-wrapper {
+      padding: 1vw;
+      .booked {
+        height: 100%;
+        width: 100%;
+        padding: 1vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &:hover {
+          background-color: #f3f4f6;
+          cursor: pointer;
+        }
+        .close-icon {
+          height: 3vw;
+          width: 3vw;
+          border-radius: 50%;
+          color: rgba(255, 0, 0, 0.497);
+          background-color: rgba(255, 0, 0, 0.125);
+          cursor: pointer;
+          i{
+            height: 3vw;
+            width: 3vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        .dr-info {
+          display: flex;
+          .dr-name {
+            font-size: 15px;
+            color: #000;
+            font-weight: 600;
+          }
+          .booking-date {
+            font-size: 14px;
+          }
+          .dr-img {
+            height: 4vw;
+            width: 4vw;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            background-color: #63DFA6;
+            margin-right: 0.7vw;
+            img {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  .dr_booking{
+    width: 80%;
+    height: 100%;
+    .booking{
+      padding-bottom: 0;
+    }
+  }
+  .booking::-webkit-scrollbar {
+    width: 8px;
+    background-color: #fff; 
+  }
+  
+  .booking::-webkit-scrollbar-thumb {
+    background-color: #5f6fff; 
+    border-radius: 4px;
+  }
+}
+// Doctor list
+.nav-img-icon-dr{
+  height: 4vw;
+  width: 4vw;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #63DFA6;
+}
+.doctor-list {
+  height: 100%;
+  width: 100%;
+  background-color: #f8f9fd;
+  padding: 1vw 2vw;
+  h3 {
+    font-size: 2vw;
+    font-weight: 600;
+    padding-left: 1.8vw;
+    padding-bottom: 1vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+.card-wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  .card {
+    width: 21vw;
+    height: 30vw;
+    &:hover {
+      margin-top: 0;
+    }
+    .card-img{
+      overflow: hidden;
+    }
+  }
+}
+.card:hover .card-img {
+  background-color: #5f6fff;
+  transition: all 0.5s ease-in-out;
+}
+// AppointMent
+.appointments-table{
+  font-size: 14px;
+  thead{
+    tr{
+      border-bottom: 1px solid gainsboro;
+    }
+  }
+  th{
+    padding: 0.5vw 0vw;
+    text-align: center;
+  }
+  tbody{
+    td{
+      padding: 0.5vw 1vw;
+      border-bottom: 1px solid gainsboro;
+      text-align: left;
+    }
+  }
+}
+.Appoint-wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: #f8f9fd;
+  padding: 2vw 1vw;
+  .a-wrapper {
+    min-width: 95%;
+    background-color: #ffffff;
+    .headingTags {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6.4vw;
+      padding: 0 2vw 1vw 1vw;
+      .patient {
+        margin-left: -2.5vw;
+      }
+      .date {
+        margin-left: -3.9vw;
+      }
+      .fee {
+        margin-left: 4vw;
+      }
+    }
+    .dr-img {
+      height: 3.9vw;
+      width: 3.9vw;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      img {
+        height: 100%;
+      }
+    }
+
+    .handleDrInfo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2vw;
+      padding: 1vw 0;
+      border-top: 1px solid rgba(128, 128, 128, 0.412);
+      span {
+        font-size: 13px;
+        color: #4b5563;
+      }
+      .ch-1,
+      .ch-2 {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 14px;
+        color: #4b5563;
+      }
+    }
+  }
+}
+.completed {
+  padding: 0.6vw 1.5vw;
+  background-color: #5f6fff;
+  border-radius: 20px;
+  color: #fff;
+}
+.pending {
+  padding: 0.6vw 1.5vw;
+  background-color: #fdb500;
+  border-radius: 20px;
+  color: #fff;
+}
+.cancelled {
+  padding: 0.6vw 1.5vw;
+  background-color: #eb2729;
+  border-radius: 20px;
+  color: #fff;
+}
+.skeleton-wrapper-app {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  padding: 1vw;
+}
+.circle-icon {
+  height: 3vw;
+  width: 3vw;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .font_icon {
+    height: 100%;
+    width: 100%;
+  }
+}
+// Add Dr
+.Add-Dr-wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: #f8f9fd;
+  padding: 2vw 1.5vw;
+  h5 {
+    font-weight: 700;
+    padding-bottom: 1.5vw;
+  }
+  .add-dr-wrapper {
+    height: 70vh;
+    background-color: #ffffff;
+    border: 1px solid rgba(128, 128, 128, 0.275);
+    border-radius: 3px;
+    overflow: auto;
+    padding: 2vw;
+    .form {
+      height: 100vh;
+    }
+  }
+}
+.userIcon{
+  cursor:pointer;
+}
+.user-img {
+  height: 7vw;
+  width: 7vw;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  position: relative;
+
+  i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 100%;
+    color: #4b5563;
+    font-size: 2vw;
+  }
+  img {
+    object-fit: cover;
+    height: 100%;
+  }
+  &:hover .overlay {
+    opacity: 1;
+  }
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* dark shade */
+  opacity: 0;
+  transition: 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.input-wrapper {
+  display: flex;
+  gap: 1vw;
+  flex-wrap: wrap;
+  margin-top: 2vw;
+  width: 100%;
+  .inp-1 {
+    display: flex;
+    flex-direction: column;
+    label {
+      color: #666;
+    }
+    input {
+      border: 1px solid rgba(128, 128, 128, 0.319);
+      padding: 0.5vw 1vw;
+      border-radius: 3px;
+      width: 30vw;
+    }
+    select {
+      border: 1px solid rgba(128, 128, 128, 0.319);
+      padding: 0.5vw 1vw;
+      border-radius: 3px;
+      width: 30vw;
+    }
+    textarea {
+      border: 1px solid rgba(128, 128, 128, 0.319);
+      padding: 0.5vw 1vw;
+      border-radius: 3px;
+    }
+    .addDr-btn {
+      // width: 5vw;
+      align-self: flex-start;
+      background-color: #5f6fff;
+      color: #fff;
+      border: none;
+      padding: 1vw 4vw;
+      border-radius: 30px;
+      margin-top: 2vw;
+    }
+  }
+}
+.add-dr-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.main-wrapper{
+  width: 100%;
+  height: 100%;
+  background-color: #F8F9FD;
+  padding: 2vw;
+}
+.patient-wrapper{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  .headingTags {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6.4vw;
+    padding: 0 2vw 1vw 1vw;
+  }
+  .handleDrInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2vw;
+    padding: 1vw 0;
+    border-top: 1px solid rgba(128, 128, 128, 0.412);
+    span {
+      font-size: 13px;
+      color: #4b5563;
+    }
+    .ch-1,
+    .ch-2 {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 14px;
+      color: #4b5563;
+    }
+  }
+}
+/* HTML: <div class="loader"></div> */
+ 
+

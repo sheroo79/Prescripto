@@ -1,0 +1,119 @@
+html,body{
+    height: 100%;
+    width: 100%;
+}
+body{
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings: "wdth" 100,"YTLC" 500;
+}
+.container-appointment{
+    height: 100%;
+    width: 100%;
+    padding: 0 40px;
+}
+.header{
+    padding-bottom: 10px;
+    margin: 20px 0;
+}
+.dr-info-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    .dr-info{
+        display: flex;
+        gap: 15px;
+        line-height: 20px;
+        .doc-img-wrap{
+            height: 8vw;
+            width: 8vw;
+            border-radius: 4px;
+            background-color: #EAEFFF;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            img{
+                height: 100%;
+            }
+        }
+        .info{
+            h6{
+                font-weight: 700;
+                font-size: 1.7vw;
+                margin-bottom: 0;
+            }
+            .specialty{
+                font-size: 15px;
+                margin-bottom: 0;
+            }
+            .address{
+                .strong{
+                    font-size: 15px;
+                }
+                p{
+                    font-size: 14px;
+                    margin-bottom: 0;
+                }
+            }
+            .datetime{
+                p{
+                    margin: 0;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+.cancle{
+    button{
+        background-color: transparent;
+        border: 0.5px solid rgba(128, 128, 128, 0.196);
+        color: gray;
+        font-size: 15px;
+        height: 3.5vw;
+        width: 17vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 3px solid #5F6FFF;
+            border-radius: 50%;
+            width: 2vw;
+            height: 2vw;
+            animation: spin 0.8s linear infinite;
+          }
+          
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+          
+    }
+    button:hover{
+        color: #fff;
+        border: none;
+        background-color: #DD2F2F;
+
+    }
+    .cancelled{
+        border: 1px solid #dd2f2fac;
+        color: #DD2F2F;
+        font-size: 14px;
+    }
+}
+.skeleton-containers{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+.skeleton-wrappers{
+    display: flex;
+    // gap: 15px;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}

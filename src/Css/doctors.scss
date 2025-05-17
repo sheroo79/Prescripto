@@ -1,0 +1,112 @@
+$gray-color : #4B5576;
+.allDr-container{
+    min-height: 100vh;
+    overflow-y: auto;
+    padding: 0 2.6rem;
+    p{
+        margin-top: 10px;
+        color: $gray-color;
+    }
+}
+.skeleton-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.skeleton-container{
+    display: flex;
+    gap: 15px;
+}
+.fieldsBtn{
+   width: 100%;
+//    padding-left: 23%;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 10px;
+   margin: 10px 0;
+   .btn{
+    border: 1px solid rgba(128, 128, 128, 0.396);
+    border-radius: 3px;
+    padding: 3px 5px;
+   }
+}
+.btn:hover{
+    background-color: #E2E5FF;
+    
+}
+.dr-wrapper{
+    display: flex;
+    // gap: 15px;
+    // flex-wrap: wrap;
+    .btn-wrapper{
+        display: flex;
+        flex-direction: column;
+        button{
+            width: 190px;
+            padding: 4px 5px;
+            text-align: left;
+            border: 1px solid rgb(227, 215, 215);
+            border-radius: 4px;
+            background-color: transparent;
+            margin: 5px 0;
+           font-size: 15px;
+           color:  $gray-color;
+        }
+        .active-btn {
+            background-color: #E2E5FF;
+            color: black;
+        }
+    }
+}
+// card
+.card-wrap{
+    margin-left: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.card:hover{
+    margin-top: -10px;
+}
+.card{
+    width: 19vw;
+    height: 28vw;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+    .card-img-wrapp{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+            height: 100%;
+            overflow: hidden;
+        }
+        .card-img{
+            background-color: #EAEFFF;
+            height: 100%;
+            object-fit: cover;
+        }  
+    .available{
+        color: #22C55E;
+        font-size: 14px;
+        font-weight: 600;
+        .available-btn{
+            background-color: #22C55E;
+            border: none;
+            border-radius: 50%;
+            padding: 4px;
+            transform: translateY(-5px);
+        }
+    }
+    .card-title{
+        color: #000;
+        font-weight: 650;
+        font-size: 18px;
+    } 
+    .card-speciality{
+        font-size: 14px;
+        margin-top: -5px;
+    }
+}

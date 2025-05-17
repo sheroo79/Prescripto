@@ -1,0 +1,64 @@
+.About-wrapper{
+    padding: 3rem;
+    h3{
+        text-align: center;
+        font-size: 23px;
+        font-weight: 700;
+    }
+    .about-skeleton{
+        display: flex;
+        gap: 40px;
+    }
+    .about{
+        padding-top: 20px;
+        display: flex;
+        gap: 50px;
+        img{
+            height: 370px;
+        }
+        p{
+            font-size: 14px;
+            span{
+                font-size: 15px;
+                font-weight: 700;
+            }
+        }
+    }
+}
+.choice-wrapper{
+    padding: 40px 0;
+    h4{
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .choice{
+        display: flex;
+        justify-content: center;
+        h6{
+            font-weight: 700;
+            font-size: 15px;
+        }
+        p{
+            font-size: 14px;
+            color: gray;
+        }
+        .box-1,
+        .box-2,
+        .box-3{
+            border: 1px solid rgba(157, 157, 157, 0.479);
+            padding: 3rem;
+            width: 270px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .box-1:hover,
+        .box-2:hover,
+        .box-3:hover{
+            background-color: #5F6FFF;
+            color: #fff;
+            p{
+                color: #fff;
+            }
+        }
+    }
+}

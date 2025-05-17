@@ -1,0 +1,80 @@
+html{
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "wdth" 100,"YTLC" 500;
+}
+.account-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+.profile-container{
+    height: 100vh;
+    padding: 40px;
+}
+.account-wrapper{
+    background-color: #FFFFFF;
+    min-width: 40%;
+    min-height: 70%;
+    padding: 1.5rem 1.4rem;
+    border-radius: 8px;
+    box-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+    h4{
+        color: #5E5E68;
+        font-weight: 700;
+    }
+    p{
+        font-size: 14px;
+        color: #5E5E68;
+    }
+    .in-1,.in-2,.in-3{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        input{
+            border: 1px solid rgba(128, 128, 128, 0.379);
+            border-radius: 3px;
+            padding: 5px 10px;
+            color: #000;
+            &:focus{
+                outline: 1px solid #5F6FFF;
+            }
+        }
+        .error{
+            color: red;
+            font-size: 13px;
+            margin-top: 1px;
+            margin-bottom: 0px;
+            font-weight: 500;
+        }
+    }
+    .Account-btn{
+        background-color: #5F6FFF;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 5px;
+        border: none;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+}
+.custom-toast .Toastify__toast{
+    color: #fff;
+    opacity: 1;
+}
+.custom-toast .Toastify__toast {
+    font-size: 12px;
+    display: flex;
+    gap: 5px;
+    width: 260px;
+  }
+  .custom-toast .Toastify__close-button {
+    color: #fff;
+    opacity: 1;
+  }
+  .toast-success{
+    background-color: #5F6FFF !important;
+  }

@@ -1,0 +1,48 @@
+.contact-wrapper{
+    padding: 4rem;
+    h3{
+        text-align: center;
+        font-size: 23px;
+        font-weight: 700;
+    }
+    .contact{
+        padding-top: 40px;
+        display: flex;
+        gap: 30px;
+        img{
+            height: 400px;
+        }
+        h5{
+            font-weight: 700;
+            color: gray;
+            padding-bottom: 20px;
+        }
+        p{
+            font-size: 14px;
+            color: gray;
+            h4{
+                font-size: 18px;
+                font-weight: 700;
+            }
+        }
+        .explore-btn{
+            height: 50px;
+            width: 150px;
+            background-color: transparent;
+            color: #000;
+            border: 1px solid #000;
+            transition: all 0.4s ease-in-out;
+        }
+        .explore-btn:hover{
+            background-color: black;
+            color: #fff;
+        }
+    }
+}
+.contact-para{
+    padding-top: 30px;
+}
+.contact-skeleton{
+    display: flex;
+    gap: 30px;
+}

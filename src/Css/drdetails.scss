@@ -1,0 +1,164 @@
+.Drdetails-container {
+  padding: 3rem;
+
+  .Drdetails-wrapper {
+    display: flex;
+    gap: 15px;
+    .img-wrapper {
+      height: 300px;
+      width: 300px;
+      background-color: #5f6fff;
+      border-radius: 7px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;  
+      img {
+        height: 100%;
+        transform: scale(1);
+        // width: 100%;
+        // // object-fit: cover;
+      }
+    }
+    .doc-skeleton{
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .details {
+      border: 1px solid rgba(128, 128, 128, 0.51);
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      color: #374151;
+      width: 70%;
+      position: relative;
+      .year {
+        font-size: 12px;
+        border: 1px solid rgba(128, 128, 128, 0.438);
+        border-radius: 20px;
+        padding: 1px 4px;
+      }
+      h3 {
+        font-weight: 700;
+        i {
+          font-size: 21px;
+          color: #1127ec;
+        }
+      }
+      .about-span {
+        color: #000000d3;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .discription {
+        font-size: 14px;
+      }
+      .fee {
+        font-weight: 600;
+      }
+    }
+  }
+  // Slot area
+  .slots {
+    width: 100%;
+    float: right;
+    padding: 30px 0 60px 36%;
+    p {
+      color: #374151;
+      font-weight: 700;
+    }
+  }
+  .btn-wrapper {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-slot {
+    background-color: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.456);
+    border-radius: 70px;
+    color: #374151;
+    height: 90px;
+    width: 5.5vw;
+    font-weight: 700;
+  }
+  .focus {
+    background-color: #5f6fff;
+    color: #fff;
+  }
+  .time-btn {
+    overflow-x: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    .btns {
+      border: 1px solid rgba(151, 146, 146, 0.434);
+      background-color: transparent;
+      border-radius: 30px;
+      color: gray;
+      min-width: 8vw;
+      font-size: 1.4vw;
+      padding: 0.2vw 0vw;
+    }
+    .focus {
+      background-color: #5f6fff;
+      color: #fff;
+    }
+    // .btns:focus{
+    //     background-color: #5F6FFF;
+    //     color: #fff;
+    // }
+  }
+  .book-btn {
+    padding: 0.7vw 3vw;
+    color: #fff;
+    background-color: #5f6fff;
+    border-radius: 30px;
+    border: none;
+    margin-top: 20px;
+    min-width: 18vw;
+    display: flex;
+    justify-content: center;
+  }
+}
+.realted-field {
+  text-align: center;
+  h3 {
+    font-weight: 700;
+  }
+  p {
+    width: 30%;
+    margin: auto;
+    font-size: 14px;
+  }
+}
+.card-field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+// Skeleton Css
+.sk-profile-name {
+  height: 40px;
+  width: 50% !important;
+  margin-bottom: 10px;
+}
+.sk-Dr-degree {
+  width: 40% !important;
+  margin-bottom: 20px;
+}
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 3px solid green;
+  border-radius: 50%;
+  width: 2vw;
+  height: 2vw;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
