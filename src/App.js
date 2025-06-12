@@ -1,44 +1,47 @@
-import "./App.css";
-import Layout from "./Layout/Layout";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "remixicon/fonts/remixicon.css";
-import Home from "./Pages/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AllDr from "./Pages/Doctors";
-import Contact from "./Pages/Contact";
-import About from "./Pages/About";
-import CreateAccout from "../src/auth/SignUp";
-import Profile from "./Pages/Profile";
-import Drdetail from "../src/Pages/DoctorDetails";
-import Login from "./auth/Login";
 import "react-toastify/dist/ReactToastify.css";
-import Appointments from "./Pages/Appointments";
-import Dashboard from "./AdminPages/Dashboard";
-import ViewAppointment from "./AdminPages/ViewAppointment";
+import "remixicon/fonts/remixicon.css";
+import CreateAccout from "../src/auth/SignUp";
+import Drdetail from "../src/Pages/DoctorDetails";
 import AddDoctor from "./AdminPages/AddDoctor";
+import AdminDrDetails from './AdminPages/AdminDrDetails';
+import AdminNavbar from './AdminPages/AdminNavbar';
+import AdminProfile from './AdminPages/AdminProfile';
+import Dashboard from "./AdminPages/Dashboard";
 import DoctorList from "./AdminPages/DoctorList";
 import LeftNabar from "./AdminPages/LayoutNavbar";
-import TestApi from "./TestApi";
-import AdminDrDetails from './AdminPages/AdminDrDetails'
-import AdminNavbar from './AdminPages/AdminNavbar'
-import DrsideNavbar from './DoctorPage/DrSideNavbar'
-import DrLayout from './DoctorPage/Layout'
-import DRViewApp from './DoctorPage/DrViewAppointment'
 import Patients from "./AdminPages/Patients";
-import AdminProfile from './AdminPages/AdminProfile'
+import ViewAppointment from "./AdminPages/ViewAppointment";
+import "./App.css";
+import Login from "./auth/Login";
+import DrsideNavbar from './DoctorPages/DrSideNavbar';
+import DRViewApp from './DoctorPages/DrViewAppointment';
+import DrLayout from './DoctorPages/Layout';
+import Layout from "./Layout/Layout";
+import About from "./Pages/About";
+import Appointments from "./Pages/Appointments";
+import Contact from "./Pages/Contact";
+import AllDr from "./Pages/Doctors";
+import Home from "./Pages/Home";
+import Profile from "./Pages/Profile";
+import TestApi from "./TestApi";
 // Routes
+import { ToastContainer } from "react-toastify";
+import AdminRoute from "./Components/AdminRoute";
+import DoctorRoute from "./Components/DoctorRoute";
 import PatientRoute from "./Components/PatientRoute";
-import AdminRoute from "./Components/AdminRoute"
-import DoctorRoute from "./Components/DoctorRoute"
-import DoctorProfle from "./DoctorPage/DoctorProfle";
-import DoctorDashboard from "./DoctorPage/DoctorDashboard";
-import ScrollToTop from "./Components/ScrollToTop";
+import DoctorDashboard from "./DoctorPages/DoctorDashboard";
+import DoctorProfle from "./DoctorPages/DoctorProfle";
+import PaymentSuccess from "./Pages/PaymentSuccess";
+import PaymentHistory from "./Pages/PaymentHistory";
+import AdminPaymentHistory from "./AdminPages/AdminPaymentHistory";
 function App() {
   return (
     <>
       
       <BrowserRouter>  
-        <ScrollToTop/>        
+        <ToastContainer theme='colored' autoClose={2000} className="custom-toast" />        
         <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
@@ -48,7 +51,10 @@ function App() {
               <Route path="signUp" element={<CreateAccout />} />
               <Route path="login" element={<Login />} />
               <Route path="doctorDetail/:id?" element={<Drdetail />} />
+              <Route path="dummy" element={<dummyJs/>}/>
               <Route path="testApi" element={<TestApi />} />
+              <Route path="payment-verify" element={<PatientRoute><PaymentSuccess/></PatientRoute>} />
+              <Route path="payment-history" element={<PatientRoute><PaymentHistory/></PatientRoute>}/>
               <Route path="appointment" element={
                 <PatientRoute>
                   <Appointments />
@@ -70,9 +76,10 @@ function App() {
                 <Route path="doctor-list" element={<DoctorList />} />
                 <Route path="patients" element={<Patients/>}/>
                 <Route path="admin-profile" element={<AdminProfile/>}/>
+                <Route path="/admin/payment-history" element={<AdminPaymentHistory/>}/>
               </Route>
               <Route path="Admin-Dr-Details/:id?" element={
-              <AdminRoute>
+                <AdminRoute>
                 <>
                   <AdminNavbar />
                   <AdminDrDetails />

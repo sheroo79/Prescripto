@@ -82,7 +82,8 @@ useEffect(()=>{
         const token = localStorage.getItem('token')
         setMiniLoader(true)
         if(!token){
-            toast.info("Please log in to continue.")
+            toast.info("Please log in to continue.",{theme: "colored",autoClose: 3000})
+            setMiniLoader(false)
             return;
         }
         if(btnSlotIndex === undefined || timeSlotIndex === undefined){
@@ -152,7 +153,6 @@ useEffect(()=>{
     },[backendDate])
 return (
     <>
-    
         <Container className='Drdetails-container'>
             <div className='Drdetails-wrapper'>
             <div className='img-wrapper'>

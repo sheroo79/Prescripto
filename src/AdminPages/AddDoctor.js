@@ -1,7 +1,8 @@
-import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
-import { ToastContainer, toast} from 'react-toastify';
+import { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { useAddDoctorMutation } from '../features/ApiSlice';
 function AddDoctor() {
+  const [addDoctor]  = useAddDoctorMutation()
   const Ref = useRef()
   const [drImage, setdrImage] = useState(null)
   const [miniLoader, setMiniLoader] = useState(false)
@@ -44,7 +45,7 @@ function AddDoctor() {
   const handleClickIcon = () =>{
     Ref.current.click()
   }
-  const handleSubmit = () =>{
+  const handleSubmit = async () =>{
     if(formData.name === ''){
       toast.info('Name is Requarid', {
         autoClose: 3000,
@@ -120,22 +121,16 @@ function AddDoctor() {
     form.append("gender",formData.gender)
     form.append("profileImage",formData.profileImage)
     console.log([...form.entries()]);
-    const token = localStorage.getItem('token')
-    console.log(token)
     
-      axios.post('https://doc-q-book.vercel.app/api/doctors',form,{
-        headers:{
-          Authorization: `Bearer ${token}`,
-          "Content-Type": 'multipart/form-data'
-        }
-      })
-      .then((response)=> {console.log(response)
-          if(response.data.status === 400){
-            toast.info("Please check your form inputs. Something is invalid.", {
-              autoClose: 3000,
-              theme: "colored"
-          });
-        } else {
+    try {
+      const response = await addDoctor(form).unwrap()
+      console.log(response)
+      // if(response.data.status === 400){
+      //       toast.info("Please check your form inputs. Something is invalid.", {
+      //         autoClose: 3000,
+      //         theme: "colored"
+      //     });
+      //   } else {
           toast.info("Doctor added successfully!", {
             autoClose: 3000,
             theme: "colored"
@@ -154,15 +149,11 @@ function AddDoctor() {
             profileImage: null
           });
           setdrImage(null)
-        }
-      })
-     .catch ((error)=> {
-       console.log(error, "Error Post Data")
-     }).finally(()=>{
+    } catch (error) {
+      console.log(error, "Error Post Data")
+    } finally {
       setMiniLoader(false)
-     })
-    
-
+    }  
   }
   
   return (
@@ -194,6 +185,7 @@ function AddDoctor() {
             <div className='inp-1'>
               <label>Select Speciality</label>
               <select value={formData.specialty} name='specialty' onChange={handleChange}>
+                <option value="">Select Speciality</option>
                 <option value="GeneralPhysician">GeneralPhysician</option>
                 <option value="Dermatologist">Dermotoligist</option>
                 <option value="Gynecologist">Gynalogist</option>
@@ -247,7 +239,7 @@ function AddDoctor() {
             </div>
             <div className='inp-1'>
               <label>About</label>
-              <textarea cols={70} rows={5} placeholder='write about doctor' value={formData.about} name='about' onChange={handleChange}>
+              <textarea cols={72} rows={5} placeholder='write about doctor' value={formData.about} name='about' onChange={handleChange} style={{ resize: 'none' }}>
 
               </textarea>
               <button type='submit' className='btn addDr-btn' onClick={handleSubmit}>Add Doctor</button>

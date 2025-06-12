@@ -1,22 +1,33 @@
-import React,{useContext} from 'react';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { toast } from 'react-toastify';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import '../Css/navpage.scss'
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import { UserContext } from '../Components/UserContext';
-
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import '../Css/navpage.scss';
+import { useGetUserDataQuery } from '../features/ApiSlice';
+import { doctorApi } from '../features/ApiSlice';
+import { useDispatch } from 'react-redux';
+import { logout } from '../features/ApiSlice';
 function NavPage() {
+  const location = useLocation()
+  const ContainerRef = useRef()
+  const dispatch = useDispatch()
+  const token = localStorage.getItem('token')
+    const {data,refetch} = useGetUserDataQuery()
+    useEffect(() => {
+    if (token) {
+      refetch();
+    }
+  }, [token]);
   const [ulToggle, setUlToggle] = useState(null)
   const [lineStyle, setLineStyle] = useState(false)
   const [previewImage,setPreviewImage] = useState(null)
-  const {userData} = useContext(UserContext)
+  
+  
   const navigate = useNavigate()
   
   const handleShow = (link) =>{
@@ -24,13 +35,13 @@ function NavPage() {
   }
   const handleLogOut = (e)=>{
     e.stopPropagation();
-    localStorage.removeItem("LogedIn");
-    localStorage.removeItem("token");
-    localStorage.removeItem("ADMIN")
-    localStorage.removeItem("PATIENT")
-    toast.info("Log out successfully")
+    toast.success("Log out successfully!",{
+       className:"toast-success"
+    })
+    dispatch(logout())
     setTimeout(() => {
       navigate('/login')
+      dispatch(doctorApi.util.resetApiState())
     }, 3000);
   }
 
@@ -39,44 +50,22 @@ function NavPage() {
     return window.removeEventListener("click",()=> setUlToggle(null))
   },[])
 
-  const token = localStorage.getItem("token")
   useEffect(()=>{
-    console.log("Token being sent:", `Bearer ${token}`);
-  
-    if (!token) {
-      console.error("Token not found in localStorage");
-      return;
-    }
-    axios.get('https://doc-q-book.vercel.app/api/view-profile', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(response => {
-      console.log(response.data.user);
-      const user = response.data.user;
-      console.log("Navbar User",user)
-        setPreviewImage(user.profileImage || null)
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  },[])
-useEffect(()=>{
-  console.log("userdata", userData)
-  setPreviewImage(userData.profileImage)
-},[userData])
-  useEffect(()=>{
-    console.log(previewImage)
-  },[previewImage])
+    setPreviewImage(data?.user?.profileImage)
+  },[data])
   const handleNavigate = () =>{
       navigate('/userProfile');
       setUlToggle(null)
   }
+   useEffect(()=>{
+        if(ContainerRef.current){
+          ContainerRef.current.scrollIntoView({top: '-50px'})
+        }
+      },[location.pathname])
   return (
     <>
     <Navbar expand="lg" data-bs-theme="light" id='Navbar'>
-      <Container className='nav-container'>
+      <Container ref={ContainerRef} className='nav-container'>
         <Navbar.Brand className='brand-img' onClick={()=> navigate('/')}>
           <img src='https://prescripto.vercel.app/assets/logo-BNCDj_dh.svg' alt='Brand'/>
         </Navbar.Brand>
@@ -91,7 +80,7 @@ useEffect(()=>{
 
           { localStorage.getItem("PATIENT") === "true" ? <div className='userIcon' onClick={(e)=> {setUlToggle(!ulToggle);e.stopPropagation()}}>
             {
-              previewImage !== null ? <div className='nav-img-icon' >
+              previewImage !== undefined ? <div className='nav-img-icon' >
               <img src={previewImage} alt='ProfileUserImg'/>
             </div> : <FontAwesomeIcon icon={faCircleUser} className='user'/>
             }
@@ -104,6 +93,9 @@ useEffect(()=>{
                 <li onClick={()=> {
                     navigate('/appointment')
                 }}>My Appointment</li>
+                <li onClick={()=> {
+                    navigate('/payment-history')
+                }}>Payments History</li>
                 <li onClick={(e)=> {
                     handleLogOut(e);
                     setUlToggle(null)

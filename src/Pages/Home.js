@@ -1,22 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
-import '../Css/home.scss'
-import {Container,Row,Col,Card} from 'react-bootstrap';
-import {useNavigate} from  'react-router-dom'
-import { axiosInstance } from '../Components/Api';
+import { useRef } from 'react';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import '../Css/home.scss';
 import { ToastContainer, toast } from 'react-toastify';
+import { useGetDoctorsQuery } from '../features/ApiSlice';
 
 function Home() {
-  const [isData, setIsData] = useState([]);
+  const { data, error, isLoading } = useGetDoctorsQuery();
+  console.log(data)
   const specialityRef = useRef(null)
-  
   const visible = 10;
   const navigate = useNavigate()
-
-  useEffect(()=>{
-   axiosInstance.get('/doctors')
-   .then((res)=> setIsData(res.data.doctors))
-   .catch((error)=> console.log(error, 'Data is not define'))
-  },[isData])
   const handleSpecialityClick = (speciality) =>{
     navigate(`/doctors?specialities=${speciality}`)  
   }
@@ -25,7 +19,6 @@ function Home() {
   }
   const scrollToSpeciality = () =>{
     specialityRef.current?.scrollIntoView({ behavior: 'smooth' });
-    window.location.hash = "speciality";
   }
   const navigateToCreateAccount = ()=>{
     const GetValue = localStorage.getItem("LogedIn")
@@ -100,7 +93,7 @@ function Home() {
         </p>
         <Row>
           {
-            isData?.slice(0,visible).map((data,index)=>(
+            data?.doctors?.slice(0,visible).map((data,index)=>(
               <Col md={4} xxl={3} key={index} className='col'>
                 <Card className='card' onClick={()=> handleDrDetail(data.id)}>
                   <div className='card-img-wrapp'>
@@ -138,3 +131,4 @@ function Home() {
 }
 
 export default Home
+

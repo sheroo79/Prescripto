@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { Container } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
-import '../Css/doctors.scss'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import { Container } from 'react-bootstrap'
-import { useLocation, useNavigate} from 'react-router-dom';
-import { axiosInstance } from '../Components/Api';
+import Skeleton from 'react-loading-skeleton';
+import { IoIosSearch } from "react-icons/io";
+import 'react-loading-skeleton/dist/skeleton.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import '../Css/doctors.scss';
+import { useGetDoctorsQuery } from '../features/ApiSlice';
+import PaginationRounded from '../TestApi';
+import { useDebounce } from 'use-debounce';
 function AllDr() {
-  const [isDr, setIsDr] = useState([])
+  const [page, setPage] = useState(1)
   const [selectSpeciality, setSelectSpeciality] = useState([]) 
-  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const location = useLocation();
+  // console.log(location.pathname)
   const params = new URLSearchParams(location.search)
   const specialities = params.get("specialities")
+  const [searchName, setSearchName] = useState('');
+  const [deBouncedSearchName] = useDebounce(searchName, 1000)
+  const {data,isLoading,isFetching} = useGetDoctorsQuery({page,searchName : deBouncedSearchName,selectSpeciality})
   const selectedSpecialities = specialities ? specialities.split(",") : [];
+  console.log(data?.doctors)
   // console.log(specialities)
+  const handlePageChange = (value) =>{
+          console.log(value)
+          setPage(value)
+      }
   useEffect(() => {
     const specialitiesFromURL = params.get('specialities')?.split(',') || [];
     setSelectSpeciality(specialitiesFromURL);
@@ -24,54 +35,49 @@ function AllDr() {
     if(selectSpeciality.length > 0){
         const query = selectSpeciality.join(",")
         navigate(`/doctors?specialities=${query}`)
-        console.log("query field",query)
+        // console.log("query field",query)
     } else{
       navigate(`/doctors`)
     }
   },[selectSpeciality])
-  useEffect(()=>{
-      axiosInstance.get('/doctors')
-      .then((res)=> {
-        console.log(res.data.doctors)
-        setIsDr(res.data.doctors)
-          setLoading(false)
-      })
-      .catch((error)=> console.log(error))
-    },[])
+
   
     const handleSpeciality = (field) =>{
       if(!selectSpeciality.includes(field)){
         setSelectSpeciality(prev => [...prev, field])
       }
-      console.log(field)
     }
+    console.log(selectSpeciality)
 
     // Clicked on the card and viewed the doctor's details.
     const handleDrDetail = (id) =>{
       navigate(`/doctorDetail/${id}`)
     }
-
-    let filterDoctors = []
-    if(selectedSpecialities.length === 0){
-      filterDoctors = isDr;
-    }else{
-      filterDoctors = isDr.filter((data) => selectedSpecialities.includes(data.specialty));
-    }
     const removeSpecialty = (fieldToRemove) =>{
     const removeField = selectSpeciality.filter((field)=> field !== fieldToRemove)
       setSelectSpeciality(removeField.length === 0 ? [] : removeField)
     }
-    // if(removeField.length === 0){
-    //   setSelectSpeciality([])
-    // }
-
-    useEffect(()=>{
-      console.log("select Specialty ")
-    },[selectSpeciality])
+   
   return (
     <>
+          {
+        isFetching && (<div className='loader-wrapper'>
+          <div className='loader_modal'></div>
+        </div>)
+      }
       <Container className='allDr-container'>
-        <div className='fieldsBtn'>
+              {isLoading ? "" : 
+              <div className='position-relative w-25 mt-2'>
+              <IoIosSearch className='fs-5 mx-1 text-muted position-absolute' style={{top: '0.8vw', right: '10px'}}/>
+                <input
+                type="text"
+                className="form-control"
+                placeholder="Search Dr..."
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+              />
+              </div>}
+        <div className='fieldsBtn mb-3'>
             {
               selectSpeciality?.map((field)=>(
                 <button className='btn'>{field} <i class="ri-close-line" onClick={()=> removeSpecialty(field)}></i></button>
@@ -96,7 +102,7 @@ function AllDr() {
         </div>
            <div className='card-wrap'>
            {
-            loading ? (<div className='skeleton-container'>
+            isLoading ? (<div className='skeleton-container'>
               <div className='skeleton-wrapper'>
                 <Skeleton count={1} width={220} height={210}/>
                 <Skeleton count={1} width={70} height={10}/>
@@ -116,9 +122,9 @@ function AllDr() {
                 <Skeleton count={1} width={100} height={10}/>
               </div>
             </div>) : (
-               filterDoctors?.map((data,index)=>(
-                  <Card className='card' key={index} onClick={()=> handleDrDetail(data.id)}>
-                    <div className='card-img-wrapp'>
+               data?.doctors?.map((data,index)=>(
+                  <Card className='card mt-1' key={index} onClick={()=> handleDrDetail(data.id)}>
+                    <div className='card-img-wrapp '>
                         <Card.Img variant="top" src={data.profile.profileImage} className='card-img'/>
                     </div>
                     <Card.Body>
@@ -134,7 +140,13 @@ function AllDr() {
             )
            }
            </div>
+           {data?.doctors?.length === 0 && <div className='text-center mx-auto'>No Doctor Found</div>}
       </div>
+      {
+        data && data?.doctors?.length > 14 && <div className="d-flex justify-content-center">
+           <PaginationRounded onPageChange={handlePageChange}/>
+      </div>
+      }
       </Container>
     </>
   )

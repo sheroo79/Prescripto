@@ -158,15 +158,13 @@ body{
     overflow: hidden;
     height: 140px;
     width: 140px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 50%;   
     background-color: #63DFA6;
     cursor: pointer;
     img{
         object-fit: cover;
         height: 100%;
+        margin-top: 2.6vw;
         width: 100%;
         transform: scale(1.4);
     }
