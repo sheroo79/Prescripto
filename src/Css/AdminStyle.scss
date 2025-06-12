@@ -3,6 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+// Drawer
+.bla {
+  padding: 2vw;
+  h5 {
+    font-weight: 630;
+  }
+}
 body {
   font-family: "Nunito Sans", sans-serif;
   font-optical-sizing: auto;
@@ -75,7 +82,8 @@ body {
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 20px;
-    .dr-wrapper,.appointment-wrapper{
+    .dr-wrapper,
+    .appointment-wrapper {
       width: 20vw;
       min-height: 9vw;
       background-color: #ffffff;
@@ -84,17 +92,17 @@ body {
       flex-direction: column;
       justify-content: space-around;
     }
-    .male{
+    .male {
       color: #5f6fff;
       font-size: 1vw;
       align-items: center;
       justify-content: center;
-      svg{
+      svg {
         font-size: 2vw;
       }
     }
-    .appointment-wrapper{
-      .male{
+    .appointment-wrapper {
+      .male {
         font-size: 1vw;
         align-items: center;
         gap: 0.2vw;
@@ -134,18 +142,18 @@ body {
       }
     }
   }
-  .patien-icon{
+  .patien-icon {
     height: 100%;
     width: 100%;
     color: #ffffffa2;
-    background-color: #D6D7D9;
+    background-color: #d6d7d9;
   }
-  .latest-data{
+  .latest-data {
     display: flex;
     gap: 2vw;
     flex-wrap: wrap;
   }
-  
+
   .latest-booking {
     overflow-y: hidden;
     width: 45%;
@@ -164,7 +172,7 @@ body {
         margin-right: 2px;
       }
     }
-    .booking{
+    .booking {
       height: 100%;
       padding-bottom: 5vw;
       overflow-y: auto;
@@ -190,7 +198,7 @@ body {
           color: rgba(255, 0, 0, 0.497);
           background-color: rgba(255, 0, 0, 0.125);
           cursor: pointer;
-          i{
+          i {
             height: 3vw;
             width: 3vw;
             display: flex;
@@ -215,40 +223,42 @@ body {
             overflow: hidden;
             display: flex;
             justify-content: center;
-            background-color: #63DFA6;
+            background-color: #63dfa6;
             margin-right: 0.7vw;
             img {
               height: 100%;
+              width: 100%;
+              object-fit: cover;
             }
           }
         }
       }
     }
   }
-  .dr_booking{
+  .dr_booking {
     width: 80%;
     height: 100%;
-    .booking{
+    .booking {
       padding-bottom: 0;
     }
   }
   .booking::-webkit-scrollbar {
     width: 8px;
-    background-color: #fff; 
+    background-color: #fff;
   }
-  
+
   .booking::-webkit-scrollbar-thumb {
-    background-color: #5f6fff; 
+    background-color: #5f6fff;
     border-radius: 4px;
   }
 }
 // Doctor list
-.nav-img-icon-dr{
+.nav-img-icon-dr {
   height: 4vw;
   width: 4vw;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #63DFA6;
+  background-color: #63dfa6;
 }
 .doctor-list {
   height: 100%;
@@ -269,12 +279,12 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   .card {
-    width: 21vw;
+    width: 21.1vw;
     height: 30vw;
     &:hover {
       margin-top: 0;
     }
-    .card-img{
+    .card-img {
       overflow: hidden;
     }
   }
@@ -284,27 +294,40 @@ body {
   transition: all 0.5s ease-in-out;
 }
 // AppointMent
-.appointments-table{
+.appointments-table {
   font-size: 14px;
-  thead{
-    tr{
+  thead {
+    tr {
       border-bottom: 1px solid gainsboro;
     }
   }
-  th{
+  th {
     padding: 0.5vw 0vw;
     text-align: center;
   }
-  tbody{
-    td{
+  tbody {
+    td {
       padding: 0.5vw 1vw;
       border-bottom: 1px solid gainsboro;
       text-align: left;
     }
   }
 }
+.filter-btn {
+  font-size: 1.2vw;
+  border-radius: 20px;
+  padding: 0 1vw;
+  border: 1px solid #5f6fff;
+  background-color: transparent;
+  color: #5f6fff;
+  height: 3vw;
+}
+.filter-btn:focus {
+  outline: none;
+}
+
 .Appoint-wrapper {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background-color: #f8f9fd;
   padding: 2vw 1vw;
@@ -327,13 +350,16 @@ body {
         margin-left: 4vw;
       }
     }
-    .dr-img {
+    .dr-img-appointment {
       height: 3.9vw;
       width: 3.9vw;
       border-radius: 50%;
       background-color: #e5e7eb;
+      overflow: hidden;
       img {
         height: 100%;
+        width: 100%;
+        object-fit: cover;
       }
     }
 
@@ -420,8 +446,8 @@ body {
     }
   }
 }
-.userIcon{
-  cursor:pointer;
+.userIcon {
+  cursor: pointer;
 }
 .user-img {
   height: 7vw;
@@ -506,13 +532,13 @@ body {
 .add-dr-wrapper::-webkit-scrollbar {
   display: none;
 }
-.main-wrapper{
+.main-wrapper {
   width: 100%;
   height: 100%;
-  background-color: #F8F9FD;
+  background-color: #f8f9fd;
   padding: 2vw;
 }
-.patient-wrapper{
+.patient-wrapper {
   width: 100%;
   height: 100%;
   background-color: #fff;
@@ -545,5 +571,3 @@ body {
   }
 }
 /* HTML: <div class="loader"></div> */
- 
-

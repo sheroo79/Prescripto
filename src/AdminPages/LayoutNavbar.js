@@ -1,19 +1,16 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import SideNavbar from './SideNavbar'
+import { Outlet, useLocation } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
-import { UserProvider } from '../Components/UserContext'
+import SideNavbar from './SideNavbar'
 function LeftNabar() {
+  const location = useLocation();
+  const hideSidebar = location.pathname === '/admin/payment-history';
   return (
     <>
-      <UserProvider>
         <AdminNavbar/>
         <div className='d-flex'>
-          <SideNavbar/>
+          {!hideSidebar && <SideNavbar />}
           <Outlet/>
         </div>
-      </UserProvider>
-      
     </>
   )
 }

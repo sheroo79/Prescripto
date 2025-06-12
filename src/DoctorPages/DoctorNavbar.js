@@ -1,63 +1,36 @@
-import {useState,useEffect, useContext} from 'react'
-import '../Css/AdminStyle.scss'
-import { Navbar,Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import { toast,ToastContainer } from 'react-toastify';
-import { UserContext } from '../Components/UserContext';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { Button, Navbar } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import '../Css/AdminStyle.scss';
+import { doctorApi, useGetUserDataQuery } from '../features/ApiSlice';
+import { logout } from '../features/ApiSlice';
 function AdminNavbar() {
-  const {userData} = useContext(UserContext)
+  const dispatch = useDispatch()
+  const {data} = useGetUserDataQuery()
+  console.log(data)
   const [loader, setLoader] = useState(false)
-  console.log(userData)
   const [ulToggle, setUlToggle] = useState(null)
   const [previewImage,setPreviewImage] = useState(null)
     const navigate = useNavigate()
     const handleLogOut = () =>{
-      localStorage.removeItem('DOCTOR')
-      localStorage.removeItem('token')
-      toast.info("Log out successfully",{position: "top-right",
+      dispatch(logout())
+      toast.info("Log out successfully",{
             autoClose: 2000,
             theme: "colored"})
             setTimeout(() => {
               navigate('/login')
+              dispatch(doctorApi.util.resetApiState())
             }, 3000);
     }
-    const data = localStorage.getItem("DOCTOR")
-    console.log(data)
-    useEffect(()=>{
-        const token = localStorage.getItem("token")
-        console.log("Token being sent:", `Bearer ${token}`);
-      
-        if (!token) {
-          console.error("Token not found in localStorage");
-          return;
-        }
-        axios.get('https://doc-q-book.vercel.app/api/view-profile', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        .then(response => {
-          console.log(response.data.user);
-          const user = response.data.user;
-          // console.log(user)
-          const doctor = localStorage.getItem("DOCTOR")
-          if(doctor  === "true"){
-            setPreviewImage(user.profileImage || null)
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      },[userData])
       useEffect(()=>{
+        setPreviewImage(data?.user?.profileImage)
         console.log(previewImage)
         window.addEventListener('click', ()=> setUlToggle(null))
-      },[previewImage,ulToggle])
+      },[data,ulToggle])
   return (
     <>
         <Navbar expand="lg" data-bs-theme="light" id='Navbar'>
@@ -66,7 +39,7 @@ function AdminNavbar() {
             </Navbar.Brand>       
             { localStorage.getItem("DOCTOR") === "true" ? <div className='userIcon' onClick={(e)=> {setUlToggle(!ulToggle);e.stopPropagation()}}>
                         {
-                          previewImage !== null ? <div className='nav-img-icon-dr'>
+                          previewImage ? <div className='nav-img-icon-dr'>
                           <img src={previewImage} alt='AdminImage' className='w-100 img-fluid'/>
                         </div> : <FontAwesomeIcon icon={faCircleUser} className='user'/>
                         }
@@ -81,13 +54,6 @@ function AdminNavbar() {
                               setLoader(false)
                             }, 2000);
                           }}>My Profile</li>
-                            <li onClick={()=> {
-                              setLoader(true)
-                              setTimeout(() => {
-                                navigate('/doctor/Dr-ViewAppointment')
-                                setLoader(false)
-                              }, 2000);
-                            }}>My Appointment</li>
                             <li onClick={(e)=> {
                               setLoader(true)
                               setTimeout(() => {
@@ -101,7 +67,7 @@ function AdminNavbar() {
                         </i>
                       </div> : <Button className='nav-Btn' onClick={()=> navigate('/signUp')}>Create account</Button>}
         </Navbar>
-        <ToastContainer/>
+        <ToastContainer theme='colored' autoClose={2000} className="custom-toast" />
     </>
   )
 }

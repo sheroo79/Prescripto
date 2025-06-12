@@ -1,51 +1,31 @@
-import React, { useEffect,useState } from 'react'
-import {Container} from 'react-bootstrap'
-import '../Css/appointment.scss'
+import moment from 'moment'
+import { useState } from 'react'
+import { Container } from 'react-bootstrap'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import axios from 'axios'
-import moment from 'moment'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import '../Css/appointment.scss'
 import PaginationRounded from '../TestApi'
-import { toast,ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { MoonLoader } from 'react-spinners';
-import { faL } from '@fortawesome/free-solid-svg-icons'
+import { useCancelAppointmentMutation, useGetApppointmentsQuery } from '../features/ApiSlice'
+import { payFee } from '../features/FeeSlice'
 function Appointments() {
-    const token = localStorage.getItem('token')
-    const [fatchAppointments, setFatchAppointments] = useState([])
+    const [page, setPage] = useState(1)
+    const {data, isLoading} = useGetApppointmentsQuery(page)
+    const [cancelAppointment] = useCancelAppointmentMutation()
+    const {loading , success, error} = useSelector(state => state.fee)
+  
+    console.log(loading,success,error)
+    console.log(data)
+    const dispatch = useDispatch()
     const [message, setMessage] = useState({})
-    const [page, setPage] = useState(0)
-    const [skeletonloading, setSkeletonLoading] = useState(true)
-    const [loading, setLoading] = useState(null)
+    const [IsLoading, setIsLoading] = useState(null)
+    const [isLoadingPay, setIsLoadingPay] = useState(null)
     const handlePageChange = (value) =>{
-        console.log(value)
         setPage(value)
     }
-    useEffect(()=>{
-        console.log(page)
-        fetchAppointments()
-    },[page])
-    
-        const fetchAppointments = async () =>{
-            try {
-                const response = await axios.get(`https://doc-q-book.vercel.app/api/appointments?page=${page}`,{
-                    headers : {
-                        Authorization : `Bearer ${token}`
-                    }
-                })
-                    setFatchAppointments(response.data.appointments)
-                    setSkeletonLoading(false)
-               
-            } catch (error) {
-                console.log("Error Fatching Data",error)
-            }
-        }
-    
-    useEffect(()=>{
-        console.log(fatchAppointments,loading)
-    },[fatchAppointments,loading])
-
-    const CancelAppointment = async (id,cancel) => {
+    const handleCancel = async (id,cancel) => {
         if(cancel){
             toast.info("Your appointment is already cancelled.",{
             toastId : id,
@@ -57,15 +37,11 @@ function Appointments() {
             })
             return;
         }
-        console.log(cancel)
-        setLoading(id);
+        console.log(id)
+          setIsLoading(id);
         try {
-        const response = await axios.post(`https://doc-q-book.vercel.app/api/appointments/${id}`, {}, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-      
+        const response = await cancelAppointment(id).unwrap()
+      console.log(response)
           if (response.status === 200 || response.status === 201) {
             toast.info("Appointment cancelled", {
               toastId : id,
@@ -78,16 +54,23 @@ function Appointments() {
           } else {
             setMessage('');
           }
-          fetchAppointments()
         } catch (error) {
           console.log(error, "Error Post method");
         } finally {
-          setLoading(false);
-          
+          setIsLoading(false);
         }
-      };
-      
-    console.log(message)
+    };
+     const handlePay = async (id) => {
+      setIsLoadingPay(id)
+        try {
+          const result = await dispatch(payFee(id)).unwrap();
+          console.log(result.url); 
+          window.location.href = result.url
+        } catch (err) {
+          console.error("Payment failed:", err);
+          }
+        }
+
   return (
     <Container className='container-appointment'>
         <div className='header'>
@@ -95,7 +78,7 @@ function Appointments() {
         </div>
         <div className='app-body'>
             {
-                        skeletonloading ? (<div className='skeleton-containers'>
+                        isLoading ? (<div className='skeleton-containers'>
                           <div className='skeleton-wrappers'>
                             <div className='d-flex gap-3'>
                                 <Skeleton count={1} width={88} height={90}/>
@@ -118,29 +101,34 @@ function Appointments() {
                             <Skeleton count={1} width={150} height={40}/>
                           </div>
                         </div>) : (
-                            fatchAppointments?.map((appoint,index)=> (
+                            data?.appointments?.map((appoint,index)=> (
                                 <div className='dr-info-wrapper' key={index}>
                                     <div className='dr-info'>
                                         <div className='doc-img-wrap'>
-                                            <img src={appoint.doctor.profile.profileImage}/>
+                                            <img src={appoint?.doctor?.profile?.profileImage}/>
                                         </div>
                                         <div className='info'>
-                                            <h6>{appoint.doctor.profile.name}</h6>
+                                            <h6>{appoint?.doctor?.profile?.name}</h6>
                                             <div className="address">
-                                                <strong>Fee</strong> : <strong>{appoint.doctor.fee}$</strong>
+                                                <strong>Fee</strong> : <strong>{appoint.doctor?.fee}$</strong>
                                             </div>
             
                                             <div className="datetime">
                                                 <strong>Date & Time:</strong>
-                                                <p>{moment.utc(appoint.appointmentDate).format('YYYY-MM-DD hh:mm a')}</p>
+                                                <p>{moment.utc(appoint?.appointmentDate).format('YYYY-MM-DD hh:mm a')}</p>
                                             </div>
                                         </div>
                                     </div>
                                     {/* Cancle Appointment */}
                                     <div className='cancle'>
-                                        <button className={appoint.isCancel === true ? `btn cancelled` : `btn`} onClick={()=> CancelAppointment(appoint.id,appoint.isCancel)}>
+                                        <button className='pay-btn' onClick={()=> handlePay(appoint.id)} disabled={appoint.isPaid || appoint.isCancel}>
                                             {
-                                                loading === appoint.id ? (<div className={loading && `loader`}></div>) : (appoint.isCancel === true ? "Appointment Cancelled" : "Cancel Appointment")
+                                              isLoadingPay === appoint.id ? (<div className={isLoadingPay && `loader`}></div>) : (appoint.isPaid ? "Paid" : appoint.isCancel ? "Cancelled" : "Pay here")
+                                            }
+                                        </button>
+                                        <button className={appoint.isCancel === true ? `btn cancelled` : `btn`} onClick={()=> handleCancel(appoint.id,appoint.isCancel)}>
+                                            {
+                                                IsLoading === appoint.id ? (<div className={IsLoading && `loader`}></div>) : (appoint.isCancel === true ? "Appointment Cancelled" : "Cancel Appointment")
                                             }
                                         </button>
                                     </div>
@@ -149,10 +137,12 @@ function Appointments() {
                         )
                         }
         </div>
-                <div className="d-flex justify-content-center">
+                {
+                  data && <div className="d-flex justify-content-center">
                     <PaginationRounded onPageChange={handlePageChange}/>
-                </div>
-            <ToastContainer/>
+                  </div>
+                }
+            <ToastContainer theme='colored' autoClose={2000} className="custom-toast" />
     </Container>
   )
 }

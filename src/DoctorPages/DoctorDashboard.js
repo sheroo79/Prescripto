@@ -1,32 +1,21 @@
-import React, { useState,useEffect } from 'react'
-import '../Css/AdminStyle.scss'
+import { faArrowsTurnToDots } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserDoctor,faHospitalUser,faArrowsTurnToDots,faCircleUser } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
 import moment from 'moment'
-import { axiosInstance } from '../Components/Api'
+import { BiMale } from "react-icons/bi"
+import { FaFemale, FaGenderless, FaUserInjured } from "react-icons/fa"
+import { FaSackDollar } from "react-icons/fa6"
+import { MdCancel, MdIncompleteCircle, MdPending } from "react-icons/md"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { BiMale } from "react-icons/bi";
-import { FaFemale,FaGenderless, FaUserInjured} from "react-icons/fa";
-import { MdCancel, MdIncompleteCircle,MdPending } from "react-icons/md";
-import { FaSackDollar } from "react-icons/fa6";
-
+import '../Css/AdminStyle.scss'
+import { useGetAdminDashBoardQuery } from '../features/ApiSlice'
+import { useEffect } from 'react'
 function DoctorDashboard() {
-    const [fatchAppointments, setFatchAppointments] = useState([])
-    const [skeletonloading, setSkeletonLoading] = useState(true)
-    const token = localStorage.getItem('token')
+    const {data,isLoading,refetch} = useGetAdminDashBoardQuery()
+    console.log(data?.data)
     useEffect(()=>{
-        axiosInstance.get('/dashboard')
-        .then((res)=>{
-          console.log(res.data.data)
-          setFatchAppointments(res.data.data)
-        }).catch((error)=> console.log(error))
-        .finally(()=> setSkeletonLoading(false))
+        refetch()
     },[])
-        useEffect(()=>{
-            console.log(fatchAppointments)
-        },[fatchAppointments])
   return (
     <>
         <div className='dashboard-wrapper'>
@@ -37,7 +26,7 @@ function DoctorDashboard() {
                         <div className='dr'>
                             <i className="ri-git-repository-fill book-icon"></i>
                             <div className='d-flex flex-column ms-2'>
-                                <strong>{fatchAppointments?.totalAppointments}</strong>
+                                <strong>{data?.data?.totalAppointments}</strong>
                                 <span>Total Appointments</span>
                             </div>
                         </div>
@@ -45,28 +34,28 @@ function DoctorDashboard() {
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><MdCancel /></span>
-                                            <span>{fatchAppointments?.cancelledAppointments}</span>
+                                            <span>{data?.data?.cancelledAppointments}</span>
                                         </div>
                                         <span className='male'>Cancelled</span>
                                     </div>
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><MdIncompleteCircle /></span>
-                                            <span>{fatchAppointments?.completedAppointments}</span>
+                                            <span>{data?.data?.completedAppointments}</span>
                                         </div>
                                         <span className='male'>Completed</span>
                                     </div>
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><FaSackDollar /></span>
-                                            <span>{fatchAppointments?.paidAppointments}</span>
+                                            <span>{data?.data?.paidAppointments}</span>
                                         </div>
                                         <span className='male'>Paid</span>
                                     </div>
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><MdPending /></span>
-                                            <span>{fatchAppointments?.pendingAppointments}</span>
+                                            <span>{data?.data?.pendingAppointments}</span>
                                         </div>
                                         <span className='male'>Pending</span>
                                     </div>
@@ -77,7 +66,7 @@ function DoctorDashboard() {
                         <div className='dr'>
                            <FaUserInjured className='book-icon' style={{fontSize:'4.5vw'}}/>
                             <div className='d-flex flex-column ms-2'>
-                                <strong>{fatchAppointments?.totalPatients}</strong>
+                                <strong>{data?.data?.totalPatients}</strong>
                                 <span>Patients Gender</span>
                             </div>
                         </div>
@@ -85,21 +74,21 @@ function DoctorDashboard() {
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><BiMale /></span>
-                                            <span>{fatchAppointments?.patientGenderCounts?.MALE}</span>
+                                            <span>{data?.data?.patientGenderCounts?.MALE}</span>
                                         </div>
                                         <span className='male'>Male</span>
                                     </div>
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><FaFemale /></span>
-                                            <span>{fatchAppointments?.patientGenderCounts?.FEMALE}</span>
+                                            <span>{data?.data?.patientGenderCounts?.FEMALE}</span>
                                         </div>
                                         <span className='male'>Female</span>
                                     </div>
                                     <div>
                                         <div className='d-flex male'>
                                             <span className="fs-6"><FaGenderless /></span>
-                                            <span>{fatchAppointments?.patientGenderCounts?.OTHERS}</span>
+                                            <span>{data?.data?.patientGenderCounts?.OTHERS}</span>
                                         </div>
                                         <span className='male'>Ohters</span>
                                     </div>
@@ -109,7 +98,7 @@ function DoctorDashboard() {
                 {/* Lates Data */}
                 <div className='latest-data'>               
                 {
-                    skeletonloading ? (
+                    isLoading ? (
                         <div>
                             <div className='skeleton-wrappers mt-4'>
                             <div className='mb-2'>
@@ -142,15 +131,15 @@ function DoctorDashboard() {
                         <h6><FontAwesomeIcon icon={faArrowsTurnToDots} className='latest-icon'/> Latest Appointments</h6>
                     <div className='booking '>
                         {
-                                fatchAppointments?.latestAppointments?.map((app,index)=>(
+                                data?.data?.latestAppointments?.map((app,index)=>(
                                     <div className='booking-wrapper' key={index}> 
                                         <div className='booked'>
                                             <div className='dr-info'>
                                                 <div className='dr-img'>
-                                                    <img src={app.doctor.profile.profileImage}/>
+                                                    <img src={app.patient.profileImage}/>
                                                 </div>
                                                     <div className='d-flex flex-column'>
-                                                        <span className='dr-name'>{app.doctor.profile.name}</span>
+                                                        <span className='dr-name'>{app.patient.name}</span>
                                                         <span className='booking-date'>Booking on {moment.utc(app.appointmentDate).format('DD MMM yyyy')} </span>
                                                         <span className='booking-date'>{moment.utc(app.appointmentDate).format('h:mm a')} </span>
                                                     </div>

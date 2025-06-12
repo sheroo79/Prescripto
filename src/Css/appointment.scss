@@ -1,119 +1,149 @@
-html,body{
-    height: 100%;
-    width: 100%;
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
-body{
-    font-family: "Nunito Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
-    font-variation-settings: "wdth" 100,"YTLC" 500;
+body {
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-variation-settings: "wdth" 100, "YTLC" 500;
 }
-.container-appointment{
-    height: 100%;
-    width: 100%;
-    padding: 0 40px;
+.container-appointment {
+  height: 100%;
+  width: 100%;
+  padding: 0 40px;
 }
-.header{
-    padding-bottom: 10px;
-    margin: 20px 0;
+
+.header {
+  padding-bottom: 10px;
+  margin: 20px 0;
 }
-.dr-info-wrapper{
+.dr-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  .dr-info {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 20px;
-    .dr-info{
-        display: flex;
-        gap: 15px;
-        line-height: 20px;
-        .doc-img-wrap{
-            height: 8vw;
-            width: 8vw;
-            border-radius: 4px;
-            background-color: #EAEFFF;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            img{
-                height: 100%;
-            }
-        }
-        .info{
-            h6{
-                font-weight: 700;
-                font-size: 1.7vw;
-                margin-bottom: 0;
-            }
-            .specialty{
-                font-size: 15px;
-                margin-bottom: 0;
-            }
-            .address{
-                .strong{
-                    font-size: 15px;
-                }
-                p{
-                    font-size: 14px;
-                    margin-bottom: 0;
-                }
-            }
-            .datetime{
-                p{
-                    margin: 0;
-                    font-size: 13px;
-                }
-            }
-        }
+    gap: 15px;
+    line-height: 20px;
+    .doc-img-wrap {
+      height: 8vw;
+      width: 8vw;
+      border-radius: 4px;
+      background-color: #eaefff;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      img {
+        height: 100%;
+      }
     }
-}
-.cancle{
-    button{
-        background-color: transparent;
-        border: 0.5px solid rgba(128, 128, 128, 0.196);
-        color: gray;
+    .info {
+      h6 {
+        font-weight: 700;
+        font-size: 1.7vw;
+        margin-bottom: 0;
+      }
+      .specialty {
         font-size: 15px;
-        height: 3.5vw;
-        width: 17vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 3px solid #5F6FFF;
-            border-radius: 50%;
-            width: 2vw;
-            height: 2vw;
-            animation: spin 0.8s linear infinite;
-          }
-          
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-          
+        margin-bottom: 0;
+      }
+      .address {
+        .strong {
+          font-size: 15px;
+        }
+        p {
+          font-size: 14px;
+          margin-bottom: 0;
+        }
+      }
+      .datetime {
+        p {
+          margin: 0;
+          font-size: 13px;
+        }
+      }
     }
-    button:hover{
+  }
+}
+.cancle {
+    .pay-btn{
+        background-color: #5f6fff;
         color: #fff;
-        border: none;
-        background-color: #DD2F2F;
-
+        margin-bottom: 0.5vw;
+        border-radius: 4px;
+        &:hover{
+            background-color: transparent;
+            color : gray;
+        }
     }
-    .cancelled{
-        border: 1px solid #dd2f2fac;
-        color: #DD2F2F;
-        font-size: 14px;
+    .pay-btn:disabled:hover {
+      background-color: #5f6fff;
+      color: #fff;
     }
-}
-.skeleton-containers{
+  button {
+    background-color: transparent;
+    transform: scale(0.9);
+    border: 0.5px solid rgba(128, 128, 128, 0.196);
+    color: gray;
+    font-size: 15px;
+    height: 3.5vw;
+    width: 17vw;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 3px solid #5f6fff;
+      border-radius: 50%;
+      width: 2vw;
+      height: 2vw;
+      animation: spin 0.8s linear infinite;
+    }
 
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+  button:nth-child(2):hover {
+    color: #fff;
+    border: none;
+    background-color: #dd2f2f;
+  }
+  .cancelled {
+    border: 1px solid #dd2f2fac;
+    color: #dd2f2f;
+    font-size: 14px;
+    border-radius: 4px;
+  }
 }
-.skeleton-wrappers{
-    display: flex;
-    // gap: 15px;
-    justify-content: space-between;
-    align-items: flex-end;
-    width: 100%;
+.skeleton-containers {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.skeleton-wrappers {
+  display: flex;
+  // gap: 15px;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+// Payment Styles
+.successful{
+  min-width: 25vw;
+  min-height: 10vw;
+  padding: 2vw;
+  box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+.done{
+  font-size: 3vw;
+  color: #5f6fff;
 }

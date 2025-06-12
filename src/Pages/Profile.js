@@ -1,16 +1,27 @@
-import React, { useEffect, useState,useRef,useContext} from 'react'
-import { Container, ModalFooter } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import { ToastContainer, toast} from 'react-toastify';
-import axios from 'axios'
-import '../Css/profile.scss'
-import { Modal } from 'react-bootstrap';
-import { UserContext } from '../Components/UserContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import { Container, Modal, ModalFooter } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import '../Css/profile.scss';
+import { useGetUserDataQuery, useUpdateProfileMutation } from '../features/ApiSlice';
+
 
 function Profile() {
-const {userData, setUserData} = useContext(UserContext)
-console.log(userData)
+  // Get Data From Api
+  const token = localStorage.getItem('token')
+  const {data,refetch} = useGetUserDataQuery()
+  useEffect(() => {
+  if (token) {
+    refetch();
+  }
+}, [token]);
+  console.log(data?.user)
+  // POST data from Api
+  const [updateProfile,{isLoading}]= useUpdateProfileMutation()
+  const userData = useSelector((state) => state.user);
   const [editable, setEditable] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [previewImage , setPreviewImage] = useState(null)
@@ -25,55 +36,19 @@ console.log(editFormData)
       [name]: value
     })
   );
-    console.log("Form data updated:", editFormData);
-  }
-  // Get Data From Api
-  const fetchData = async () => {
-    const token = localStorage.getItem("token");
-    console.log("Token being sent:", `Bearer ${token}`);
-  
-    if (!token) {
-      console.error("Token not found in localStorage");
-      return;
-    }
-  
-    try {
-      const response = await axios.get('https://doc-q-book.vercel.app/api/view-profile', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      console.log(response.data)
-  
-      const user = response.data.user;
-      const formattedDate = user.dateOfBirth ? user.dateOfBirth.split("T")[0] : '';
-  
-      setUserData({
-        name: user.name || "User Name",
-        email: user.email || "9434khan@gmail.com",
-        phone: user.phone || "000000",
-        address: user.address || "",
-        gender: user.gender || "",
-        dateOfBirth: formattedDate,
-        profileImage : user.profileImage || null
-      });
-  
-      // setPreviewImage(user.profileImage || null);
-    } catch (error) {
-      console.log(error, 'Error fetching data');
-    }
-  };
-  
-    useEffect(()=>{
-      fetchData()
-    },[])
+  console.log("Form data updated:", editFormData);
+}
+const formattedDate = data?.user?.dateOfBirth ? data?.user.dateOfBirth.split("T")[0] : '';
 
 useEffect(()=>{
   console.log("Edit Form Data",editFormData)
 },[editFormData,previewImage])
 useEffect(()=>{
-  console.log("User Data",userData)
-},[userData])
+  console.log("User Data",data?.user)
+  setEditFormData({
+      dateOfBirth: formattedDate
+    })
+},[data?.user])
   const handlefileChange = (e) => {
     const file = e.target.files[0];
     console.log("Selected file:", file);
@@ -95,12 +70,13 @@ useEffect(()=>{
   }
   const handleEditClick = () =>{
     setEditFormData({
-      name : userData.name,
-      phone : userData.phone,
-      gender : userData.gender,
-      dateOfBirth: userData.dateOfBirth
+      name : data?.user?.name,
+      phone : data?.user?.phone,
+      email : data?.user?.email,
+      gender : data?.user?.gender,
+      dateOfBirth: formattedDate
     })
-    setPreviewImage(userData.profileImage)
+    setPreviewImage(data?.user?.profileImage)
     setModalVisible(true)
   }
   const handleEditSave = async () =>{
@@ -115,9 +91,9 @@ useEffect(()=>{
       formData.append('email', editFormData.email);
     }
   
-    if (editFormData.phone?.trim()) {
-      formData.append('phone', editFormData.phone);
-    }
+    // if (editFormData.phone?.trim()) {
+    //   formData.append('phone', editFormData.phone);
+    // }
   
     if (editFormData.gender?.trim()) {
       formData.append('gender', editFormData.gender);
@@ -134,23 +110,17 @@ useEffect(()=>{
     console.log("Sending:", [...formData.entries()]); 
 
     try {
-     const response = await axios.post(`https://doc-q-book.vercel.app/api/update-profile`,formData,{
-        headers:{
-          "Content-Type": 'multipart/form-data',
-          Authorization:`Bearer ${token}`
-        }
-      }) 
-      console.log("Responce From Api Post",response.data)
-      if(response.status === 200 && response.data.user){
+     const response = await updateProfile(formData).unwrap()
+      console.log("Responce From Api Post",response)
+      if(response.status === 200){
         toast.info('Profile updated successfully!', {
           position: "top-right",
-                    autoClose: 2000,
-                    theme: "colored"
-                  });
-                  fetchData()
-                  setModalVisible(false)
-                } 
-                if(response.data.status === 500){
+            autoClose: 2000,
+            theme: "colored"
+        });
+            setModalVisible(false)
+        } 
+        if(response.data.status === 500){
                   toast.info('Profile image upload failed', {
                     position: "top-right",
                     autoClose: 5000,
@@ -160,7 +130,7 @@ useEffect(()=>{
             theme: "colored"
         });
         setModalVisible(true)
-        }
+          }
         
         
     } catch (error) {
@@ -177,19 +147,22 @@ useEffect(()=>{
       <div className='loader_modal'></div>
     </div>
     }
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+      <ToastContainer theme='colored' autoClose={2000} className="custom-toast" />
         <Container className='profile-container'>
             <div>
                   {
-                    userData.profileImage === null ? <div className='change-img-icon'>
-                    <FontAwesomeIcon icon={faCircleUser} className='usericon'/>
-                  </div> :
-                  <div className='profile-img'>
-                      <img src={userData.profileImage} alt='user profile img'/>
-                  </div>
+                    !data?.user?.profileImage ? (
+                      <div className='change-img-icon'>
+                        <FontAwesomeIcon icon={faCircleUser} className='usericon' />
+                      </div>
+                    ) : (
+                      <div className='profile-img'>
+                        <img src={data.user.profileImage} alt='user profile img' className='mt-3' />
+                      </div>
+                    )
                   }
                 <div className='userName'>
-                  <h2>{userData.name}</h2>
+                  <h2>{data?.user?.name}</h2>
                 </div>
                 <div >
                   <span className='contact-information'>CONTACT INFORMATION</span>  
@@ -197,17 +170,17 @@ useEffect(()=>{
 
                     <div className='informations'>
                       <span className='key'>Email id:</span>
-                      <input disabled value={userData.email} className='value'/>
+                      <input disabled value={data?.user?.email} className='value'/>
                     </div>
 
                     <div className='informations'>
                       <span className='key'>Phone:</span> 
-                      <input disabled type='text' name='phone' value={userData.phone} className='value'/>
+                      <input disabled type='text' name='phone' value={data?.user?.phone} className='value'/>
                     </div>
 
                     <div className='informations' style={{ marginBottom: '20px' }}>
                       <span className='key'>Address: </span>
-                      <input disabled type='text' name='address' value={userData.address} className='value'/>
+                      <input disabled type='text' name='address' value={data?.user?.address} className='value'/>
                     </div>
 
                     {/* basic informaiton */}
@@ -215,7 +188,7 @@ useEffect(()=>{
 
                     <div className='informations-select'>
                       <span className='key'>Gender</span>
-                      <select disabled className='value' name='gender' value={userData.gender}>
+                      <select disabled className='value' name='gender' value={data?.user?.gender}>
                         <option value="">Not select</option>
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
@@ -223,7 +196,7 @@ useEffect(()=>{
                     </div>
                     <div className='informations-birthday'>
                       <span className='key'>Birthday</span>
-                      <input disabled type='date' value={userData.dateOfBirth}/>
+                      <input disabled value={formattedDate}/>
                     </div>
                     <button className='edit-btn addDr-btn' onClick={(e)=> {
                       e.stopPropagation();
