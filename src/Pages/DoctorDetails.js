@@ -18,6 +18,7 @@ function Drdetail() {
     const [weekdays, setWeekdays] = useState()
     const {id} = useParams();
     const idNumber = Number(id)
+    console.log(idNumber)
     const navigate = useNavigate()
     const [timeSlotIndex, setTimeSlotIndex] = useState()
     const [btnSlotIndex, setBtnSlotIndex] = useState()

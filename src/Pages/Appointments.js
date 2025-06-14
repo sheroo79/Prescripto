@@ -101,7 +101,13 @@ function Appointments() {
                             <Skeleton count={1} width={150} height={40}/>
                           </div>
                         </div>) : (
-                            data?.appointments?.map((appoint,index)=> (
+                            <> 
+                            {
+                              !data?.appointments || data?.appointments.length === 0 ? (
+                              <div className='no-appointment-message'>
+                                No Appointment Found
+                              </div>
+                            ) : data?.appointments?.map((appoint,index)=> (
                                 <div className='dr-info-wrapper' key={index}>
                                     <div className='dr-info'>
                                         <div className='doc-img-wrap'>
@@ -134,13 +140,17 @@ function Appointments() {
                                     </div>
                                 </div>
                             ))
+                            }
+                            </>
                         )
                         }
         </div>
                 {
-                  data && <div className="d-flex justify-content-center">
-                    <PaginationRounded onPageChange={handlePageChange}/>
-                  </div>
+                  data?.appointments?.length > 14 && (
+                    <div className="d-flex justify-content-center">
+                      <PaginationRounded onPageChange={handlePageChange}/>
+                    </div>
+                  )
                 }
             <ToastContainer theme='colored' autoClose={2000} className="custom-toast" />
     </Container>

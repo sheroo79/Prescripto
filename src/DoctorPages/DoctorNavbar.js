@@ -46,7 +46,7 @@ function AdminNavbar() {
                         <i className="ri-arrow-drop-down-line drowpdown" >
                           {
                             ulToggle && <ul>
-                            <li onClick={(e)=> {e.stopPropagation();
+                            <li onClick={()=> {
                             setLoader(true)
                             setTimeout(() => {
                               navigate('/doctor/Doctor-profile');
@@ -54,6 +54,9 @@ function AdminNavbar() {
                               setLoader(false)
                             }, 2000);
                           }}>My Profile</li>
+                            <li onClick={()=> {
+                          navigate('/doctor/payment-history');
+                          }}>Payment History</li>
                             <li onClick={(e)=> {
                               setLoader(true)
                               setTimeout(() => {

@@ -36,6 +36,8 @@ import DoctorProfle from "./DoctorPages/DoctorProfle";
 import PaymentSuccess from "./Pages/PaymentSuccess";
 import PaymentHistory from "./Pages/PaymentHistory";
 import AdminPaymentHistory from "./AdminPages/AdminPaymentHistory";
+import DoctorPaymentHistory from "./DoctorPages/DoctorPaymentHistory";
+import Schedule from "./DoctorPages/Schedule";
 function App() {
   return (
     <>
@@ -92,9 +94,11 @@ function App() {
                   </DoctorRoute>
                   }>
                   <Route path="doctor-dashboard" element={<DoctorDashboard/>}/>
+                  <Route path="payment-history" element={<DoctorPaymentHistory/>}/>
                   <Route path="Dr-sideBar" element={<DrsideNavbar/>}/>
                   <Route path="Dr-ViewAppointment" element={<DRViewApp/>}/>
                   <Route path="Doctor-profile" element={<DoctorProfle/>}/>
+                  <Route path="schedule" element={<Schedule/>}/>
                 </Route>  
         </Routes>
       </BrowserRouter>
