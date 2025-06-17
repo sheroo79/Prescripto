@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useGetDoctorsQuery } from '../features/ApiSlice';
 
 function Home() {
-  const { data, error, isLoading } = useGetDoctorsQuery();
+  const { data, error, isLoading } = useGetDoctorsQuery(1);
   console.log(data)
   const specialityRef = useRef(null)
   const visible = 10;

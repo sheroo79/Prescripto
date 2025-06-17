@@ -570,4 +570,8 @@ body {
     }
   }
 }
-/* HTML: <div class="loader"></div> */
+// Schedule Styling
+.react-time-picker__wrapper {
+    border: thin solid #dee2e6 !important;
+    border-radius: 3px;
+}
