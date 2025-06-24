@@ -26,9 +26,9 @@ html,body{
         position: relative;
         .brand-img{
             cursor: pointer;
-            img{
-             height: 3.2vw;
-            }
+            // img{
+            //  height: 3.2vw;
+            // }
          }
     }
     .nav-Btn{
@@ -115,19 +115,19 @@ html,body{
   .userIcon{
     display: flex;
   }
-  .nav-img-icon{
-    height: 4vw;
-    width: 4vw;
-    position: relative;
-    background-color: #63DFA6;
-    border-radius: 50%;
-    overflow: hidden;
-    img{
-        height: 100%;
-        object-fit: cover;
-        cursor: pointer;
-        transform: scale(1.7);
-        position: absolute;
-        left: 20%;
-    }
-  }
+//   .nav-img-icon{
+//     height: 4vw;
+//     width: 4vw;
+//     position: relative;
+//     background-color: #63DFA6;
+//     border-radius: 50%;
+//     overflow: hidden;
+//     img{
+//         height: 100%;
+//         object-fit: cover;
+//         cursor: pointer;
+//         transform: scale(1.7);
+//         position: absolute;
+//         left: 20%;
+//     }
+//   }

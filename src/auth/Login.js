@@ -90,7 +90,7 @@ function Login() {
             </div>
             <button type='submit' className='Account-btn'>LogIn</button>
           </form>
-          <p className='login-p'>Create a new account? <Link to="/signUp">Click here</Link></p>
+          <p className='login-p'>Create a new account? <Link to="/signUp" className="text-blue-500 underline">Click here</Link></p>
         </div>
       </Container>
     </>

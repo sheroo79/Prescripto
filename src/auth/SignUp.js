@@ -116,7 +116,7 @@ function CreateAccout() {
                 </div>
                     <button type='submit' className='Account-btn'>Create Account</button>
                 </form>
-                <p className='login-p'>Already have an account? <Link to="/login">Login here</Link></p>
+                <p className='login-p'>Already have an account? <Link to="/login" className="text-blue-500 underline">Login here</Link></p>
             </div>
         </Container>
         <ToastContainer/>
